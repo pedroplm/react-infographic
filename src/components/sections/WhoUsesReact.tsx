@@ -1,16 +1,4 @@
 import { motion } from "framer-motion";
-import {
-  Facebook,
-  Instagram,
-  Film,
-  Home,
-  MessageCircle,
-  ShoppingCart,
-  Car,
-  Pin,
-  MessageSquareText,
-  Server,
-} from "lucide-react";
 
 interface Company {
   name: string;

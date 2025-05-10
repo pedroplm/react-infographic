@@ -1,16 +1,4 @@
 import { motion } from "framer-motion";
-import {
-  Box,
-  Database,
-  Smartphone,
-  Network,
-  Package,
-  Settings,
-  Webhook,
-  FileCode,
-  Layout,
-  Workflow,
-} from "lucide-react";
 
 interface Layer {
   title: string;
