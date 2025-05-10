@@ -1,0 +1,25 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Package Manager Rule
+
+This project uses Yarn as its package manager. Always use yarn commands instead of npm or pnpm.
+
+## Examples of correct commands:
+- `yarn add <package>` - to install a new package
+- `yarn remove <package>` - to remove a package
+- `yarn` - to install all dependencies
+- `yarn dev` - to start the development server
+- `yarn build` - to build the project
+
+## Why Yarn?
+- The project uses `yarn.lock` for dependency version locking
+- Consistent with the project's existing setup
+- Better performance and reliability for this specific project setup
+
+## Important Notes:
+- Never use `npm install` or `pnpm install`
+- Always commit the `yarn.lock` file
+- Use `yarn` commands in scripts and documentation

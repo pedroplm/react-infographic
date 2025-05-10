@@ -1,0 +1,35 @@
+---
+description:
+globs:
+alwaysApply: false
+---
+# Tech Stack and Configuration
+
+This project uses TypeScript, Tailwind CSS, and shadcn/ui for development.
+
+## TypeScript Configuration
+- Main configuration in [tsconfig.json](mdc:tsconfig.json)
+- App-specific configuration in [tsconfig.app.json](mdc:tsconfig.app.json)
+- Node-specific configuration in [tsconfig.node.json](mdc:tsconfig.node.json)
+
+## Tailwind CSS
+- Configuration is integrated with shadcn/ui
+- Styles are defined in [src/index.css](mdc:src/index.css)
+- Uses the "new-york" style theme
+- CSS variables are enabled for theming
+
+## shadcn/ui
+- Configuration in [components.json](mdc:components.json)
+- Components are located in `@/components`
+- Utilities are in `@/lib/utils`
+- Uses Lucide as the icon library
+- Follows the shadcn/ui component structure:
+  - UI components in `@/components/ui`
+  - Custom components in `@/components`
+
+## Important Notes:
+- Always use TypeScript for new files
+- Follow shadcn/ui's component patterns
+- Use Tailwind classes for styling
+- Maintain type safety throughout the codebase
+- Use the provided path aliases (e.g., `@/components`, `@/lib`)
