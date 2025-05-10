@@ -1,4 +1,3 @@
-import React from "react";
 import { motion } from "framer-motion";
 import {
   Facebook,
@@ -10,16 +9,6 @@ import {
   Car,
   Pin,
   MessageSquareText,
-  Building2,
-  Cloud,
-  FileDown,
-  CreditCard,
-  MessageSquareMore,
-  Twitch,
-  Twitter,
-  GraduationCap,
-  CheckSquare,
-  FileText,
   Server,
 } from "lucide-react";
 

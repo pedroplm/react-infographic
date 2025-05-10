@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { motion } from "framer-motion";
 import { Hero } from "../sections/Hero";
 import { WhatIsReact } from "../sections/WhatIsReact";
@@ -15,21 +15,10 @@ import {
   Car,
   Pin,
   MessageSquareText,
-  Building2,
-  Cloud,
-  FileDown,
-  CreditCard,
-  MessageSquareMore,
-  Twitch,
-  Twitter,
-  GraduationCap,
-  CheckSquare,
-  FileText,
   Server,
   Box,
   Database,
   Smartphone,
-  Terminal,
   Network,
   Package,
   Settings,
@@ -39,7 +28,6 @@ import {
   Workflow,
   Code2,
   GitBranch,
-  Globe,
   Zap,
   GitPullRequest,
 } from "lucide-react";

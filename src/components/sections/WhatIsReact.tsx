@@ -1,6 +1,5 @@
-import React from "react";
 import { motion } from "framer-motion";
-import { Code2, GitBranch, Globe, Zap, GitPullRequest } from "lucide-react";
+import { Code2, GitBranch, Zap, GitPullRequest } from "lucide-react";
 
 interface TimelineItem {
   year: string;
