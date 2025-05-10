@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -38,11 +38,224 @@ import {
   CheckSquare,
   FileText,
   Server,
+  Box,
+  Database,
+  Smartphone,
+  Terminal,
+  Network,
+  Package,
+  Settings,
+  Webhook,
+  FileCode,
+  Layout,
+  Workflow,
 } from "lucide-react";
 
+const translations = {
+  en: {
+    hero: {
+      title: "🚀 The Future of Development: React Explained",
+      subtitle: "How the world's most popular UI library changed the game",
+    },
+    whatIsReact: {
+      title: "What is React?",
+      description:
+        "A revolutionary JavaScript library created by Facebook to solve real problems in building complex, fast, and maintainable user interfaces.",
+      evolution: "React's Evolution",
+      timeline: [
+        {
+          year: "2011",
+          title: "First Prototype",
+          description: "Jordan Walke creates 'FaxJS' inside Facebook",
+          icon: <Code2 className="w-6 h-6" />,
+        },
+        {
+          year: "2013",
+          title: "Open Source Release",
+          description: "React is open-sourced at JSConf US",
+          icon: <GitBranch className="w-6 h-6" />,
+        },
+        {
+          year: "2015",
+          title: "React Native & JSX",
+          description: "Mobile development and JSX adoption",
+          icon: <Globe className="w-6 h-6" />,
+        },
+        {
+          year: "2020",
+          title: "Modern Features",
+          description: "React Hooks and Server Components",
+          icon: <Zap className="w-6 h-6" />,
+        },
+        {
+          year: "2025",
+          title: "Industry Standard",
+          description: "Used in millions of projects worldwide",
+          icon: <GitPullRequest className="w-6 h-6" />,
+        },
+      ],
+      beforeReact: "Before React",
+      afterReact: "React's Solution",
+      problems: [
+        "Manual DOM manipulation",
+        "Difficult state management",
+        "UI logic scattered everywhere",
+        "Poor performance on updates",
+        "Spaghetti code in big projects",
+      ],
+      solutions: [
+        "Virtual DOM for efficient updates",
+        "Component-based + Hooks for state",
+        "Encapsulated components (JSX)",
+        "Batching + diffing updates",
+        "Modular, declarative structure",
+      ],
+    },
+    whyUseReact: {
+      title: "Why Developers and Companies Choose React",
+      description:
+        "React isn't just popular by chance — it's loved by developers and adopted by tech giants because it solves real problems, boosts productivity, and scales beautifully.",
+      developerBenefits: "Developer-Friendly: Build Faster, Smarter",
+      businessBenefits: "Why Businesses Trust React",
+      frameworkComparison: "React vs Other Frameworks",
+    },
+    growth: {
+      title: "React's Growth Over the Years",
+      description:
+        "From a niche internal tool at Facebook to the world's most dominant front-end library, backed by data from developers, recruiters, and open-source platforms.",
+    },
+    whoUses: {
+      title: "Who Uses React?",
+      description:
+        "From social media giants to innovative startups, React powers some of the world's most popular applications",
+    },
+    modernStack: {
+      title: "React in the Modern Development Stack",
+      description:
+        "React shines brightest when it's part of a full, modern development stack — powering web, mobile, and cross-platform UIs while seamlessly integrating with tools, APIs, and backends.",
+    },
+    cta: {
+      title:
+        "React isn't just a library. It's a movement that redefined UI development.",
+      subtitle:
+        "Join millions of developers building the future of web applications",
+      button: "Get Started with React",
+    },
+  },
+  pt: {
+    hero: {
+      title: "🚀 O Futuro do Desenvolvimento: React Explicado",
+      subtitle: "Como a biblioteca de UI mais popular do mundo mudou o jogo",
+    },
+    whatIsReact: {
+      title: "O que é React?",
+      description:
+        "Uma biblioteca JavaScript revolucionária criada pelo Facebook para resolver problemas reais na construção de interfaces de usuário complexas, rápidas e de fácil manutenção.",
+      evolution: "Evolução do React",
+      timeline: [
+        {
+          year: "2011",
+          title: "Primeiro Protótipo",
+          description: "Jordan Walke cria 'FaxJS' dentro do Facebook",
+          icon: <Code2 className="w-6 h-6" />,
+        },
+        {
+          year: "2013",
+          title: "Lançamento Open Source",
+          description: "React é lançado como open source no JSConf US",
+          icon: <GitBranch className="w-6 h-6" />,
+        },
+        {
+          year: "2015",
+          title: "React Native & JSX",
+          description: "Desenvolvimento mobile e adoção do JSX",
+          icon: <Globe className="w-6 h-6" />,
+        },
+        {
+          year: "2020",
+          title: "Recursos Modernos",
+          description: "React Hooks e Server Components",
+          icon: <Zap className="w-6 h-6" />,
+        },
+        {
+          year: "2025",
+          title: "Padrão da Indústria",
+          description: "Usado em milhões de projetos no mundo todo",
+          icon: <GitPullRequest className="w-6 h-6" />,
+        },
+      ],
+      beforeReact: "Antes do React",
+      afterReact: "Solução do React",
+      problems: [
+        "Manipulação manual do DOM",
+        "Gerenciamento de estado difícil",
+        "Lógica de UI espalhada",
+        "Baixo desempenho em atualizações",
+        "Código confuso em projetos grandes",
+      ],
+      solutions: [
+        "Virtual DOM para atualizações eficientes",
+        "Componentes + Hooks para estado",
+        "Componentes encapsulados (JSX)",
+        "Atualizações em lote e diffing",
+        "Estrutura modular e declarativa",
+      ],
+    },
+    whyUseReact: {
+      title: "Por que Desenvolvedores e Empresas Escolhem React",
+      description:
+        "O React não é popular por acaso — é amado pelos desenvolvedores e adotado por gigantes da tecnologia porque resolve problemas reais, aumenta a produtividade e escala perfeitamente.",
+      developerBenefits:
+        "Amigável para Desenvolvedores: Construa Mais Rápido e Melhor",
+      businessBenefits: "Por que as Empresas Confiam no React",
+      frameworkComparison: "React vs Outros Frameworks",
+    },
+    growth: {
+      title: "Crescimento do React ao Longo dos Anos",
+      description:
+        "De uma ferramenta interna do Facebook à biblioteca front-end mais dominante do mundo, respaldada por dados de desenvolvedores, recrutadores e plataformas open source.",
+    },
+    whoUses: {
+      title: "Quem Usa React?",
+      description:
+        "De gigantes das redes sociais a startups inovadoras, o React impulsiona algumas das aplicações mais populares do mundo",
+    },
+    modernStack: {
+      title: "React na Stack Moderna de Desenvolvimento",
+      description:
+        "O React brilha mais quando faz parte de uma stack moderna completa — alimentando UIs web, mobile e multiplataforma enquanto se integra perfeitamente com ferramentas, APIs e backends.",
+    },
+    cta: {
+      title:
+        "React não é apenas uma biblioteca. É um movimento que redefiniu o desenvolvimento de UI.",
+      subtitle:
+        "Junte-se a milhões de desenvolvedores construindo o futuro das aplicações web",
+      button: "Comece com React",
+    },
+  },
+};
+
 export function Infographic() {
+  const [language, setLanguage] = useState<"en" | "pt">("en");
+  const t = translations[language];
+
+  const toggleLanguage = () => {
+    setLanguage((prev) => (prev === "en" ? "pt" : "en"));
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-gray-800 to-black text-white">
+      {/* Language Toggle Button */}
+      <motion.button
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        onClick={toggleLanguage}
+        className="fixed top-4 right-4 z-50 px-4 py-2 bg-gray-800/80 backdrop-blur-sm rounded-lg border border-gray-700 hover:border-blue-500/50 transition-colors text-sm font-medium"
+      >
+        {language === "en" ? "PT" : "EN"}
+      </motion.button>
+
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-500/20 via-purple-500/10 to-transparent" />
@@ -54,11 +267,9 @@ export function Infographic() {
             className="text-center"
           >
             <h1 className="text-6xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              🚀 The Future of Development: React Explained
+              {t.hero.title}
             </h1>
-            <p className="text-xl text-gray-300">
-              How the world's most popular UI library changed the game
-            </p>
+            <p className="text-xl text-gray-300">{t.hero.subtitle}</p>
           </motion.div>
         </div>
       </section>
@@ -73,55 +284,22 @@ export function Infographic() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              What is React?
+              {t.whatIsReact.title}
             </h2>
             <p className="text-xl text-gray-300 mt-4 max-w-3xl mx-auto">
-              A revolutionary JavaScript library created by Facebook to solve
-              real problems in building complex, fast, and maintainable user
-              interfaces.
+              {t.whatIsReact.description}
             </p>
           </motion.div>
 
           {/* Timeline */}
           <div className="mb-20">
             <h3 className="text-2xl font-semibold mb-8 text-center">
-              React's Evolution
+              {t.whatIsReact.evolution}
             </h3>
             <div className="relative">
               <div className="absolute left-1/2 transform -translate-x-1/2 h-full w-1 bg-gradient-to-b from-blue-500 to-purple-500" />
               <div className="space-y-12">
-                {[
-                  {
-                    year: "2011",
-                    title: "First Prototype",
-                    description: "Jordan Walke creates 'FaxJS' inside Facebook",
-                    icon: <Code2 className="w-6 h-6" />,
-                  },
-                  {
-                    year: "2013",
-                    title: "Open Source Release",
-                    description: "React is open-sourced at JSConf US",
-                    icon: <GitBranch className="w-6 h-6" />,
-                  },
-                  {
-                    year: "2015",
-                    title: "React Native & JSX",
-                    description: "Mobile development and JSX adoption",
-                    icon: <Globe className="w-6 h-6" />,
-                  },
-                  {
-                    year: "2020",
-                    title: "Modern Features",
-                    description: "React Hooks and Server Components",
-                    icon: <Zap className="w-6 h-6" />,
-                  },
-                  {
-                    year: "2025",
-                    title: "Industry Standard",
-                    description: "Used in millions of projects worldwide",
-                    icon: <GitPullRequest className="w-6 h-6" />,
-                  },
-                ].map((milestone, index) => (
+                {t.whatIsReact.timeline.map((milestone, index) => (
                   <motion.div
                     key={index}
                     initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
@@ -161,15 +339,11 @@ export function Infographic() {
               transition={{ duration: 0.8 }}
               className="space-y-6"
             >
-              <h3 className="text-2xl font-semibold mb-6">Before React</h3>
+              <h3 className="text-2xl font-semibold mb-6">
+                {t.whatIsReact.beforeReact}
+              </h3>
               <div className="space-y-4">
-                {[
-                  "Manual DOM manipulation",
-                  "Difficult state management",
-                  "UI logic scattered everywhere",
-                  "Poor performance on updates",
-                  "Spaghetti code in big projects",
-                ].map((problem, index) => (
+                {t.whatIsReact.problems.map((problem, index) => (
                   <div
                     key={index}
                     className="flex items-center gap-3 text-gray-300"
@@ -186,15 +360,11 @@ export function Infographic() {
               transition={{ duration: 0.8 }}
               className="space-y-6"
             >
-              <h3 className="text-2xl font-semibold mb-6">React's Solution</h3>
+              <h3 className="text-2xl font-semibold mb-6">
+                {t.whatIsReact.afterReact}
+              </h3>
               <div className="space-y-4">
-                {[
-                  "Virtual DOM for efficient updates",
-                  "Component-based + Hooks for state",
-                  "Encapsulated components (JSX)",
-                  "Batching + diffing updates",
-                  "Modular, declarative structure",
-                ].map((solution, index) => (
+                {t.whatIsReact.solutions.map((solution, index) => (
                   <div
                     key={index}
                     className="flex items-center gap-3 text-gray-300"
@@ -267,19 +437,17 @@ export function Infographic() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              Why Developers and Companies Choose React
+              {t.whyUseReact.title}
             </h2>
             <p className="text-xl text-gray-300 mt-4 max-w-3xl mx-auto">
-              React isn't just popular by chance — it's loved by developers and
-              adopted by tech giants because it solves real problems, boosts
-              productivity, and scales beautifully.
+              {t.whyUseReact.description}
             </p>
           </motion.div>
 
           {/* Developer Benefits */}
           <div className="mb-20">
             <h3 className="text-2xl font-semibold mb-8 text-center">
-              Developer-Friendly: Build Faster, Smarter
+              {t.whyUseReact.developerBenefits}
             </h3>
             <div className="grid md:grid-cols-3 gap-8">
               {[
@@ -340,7 +508,7 @@ export function Infographic() {
           {/* Framework Comparison */}
           <div className="mb-20">
             <h3 className="text-2xl font-semibold mb-8 text-center">
-              React vs Other Frameworks
+              {t.whyUseReact.frameworkComparison}
             </h3>
             <div className="overflow-x-auto">
               <div className="min-w-[800px] bg-gray-800/50 rounded-lg border border-gray-700">
@@ -379,7 +547,7 @@ export function Infographic() {
           {/* Business Benefits */}
           <div className="mb-20">
             <h3 className="text-2xl font-semibold mb-8 text-center">
-              Why Businesses Trust React
+              {t.whyUseReact.businessBenefits}
             </h3>
             <div className="grid md:grid-cols-2 gap-12">
               <motion.div
@@ -473,12 +641,10 @@ export function Infographic() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              React's Growth Over the Years
+              {t.growth.title}
             </h2>
             <p className="text-xl text-gray-300 mt-4 max-w-3xl mx-auto">
-              From a niche internal tool at Facebook to the world's most
-              dominant front-end library, backed by data from developers,
-              recruiters, and open-source platforms.
+              {t.growth.description}
             </p>
           </motion.div>
 
@@ -758,11 +924,10 @@ export function Infographic() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              Who Uses React?
+              {t.whoUses.title}
             </h2>
             <p className="text-xl text-gray-300 mt-4 max-w-3xl mx-auto">
-              From social media giants to innovative startups, React powers some
-              of the world's most popular applications
+              {t.whoUses.description}
             </p>
           </motion.div>
 
@@ -891,6 +1056,364 @@ export function Infographic() {
         </div>
       </section>
 
+      {/* React in Modern Stack Section */}
+      <section className="py-20 relative">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+              {t.modernStack.title}
+            </h2>
+            <p className="text-xl text-gray-300 mt-4 max-w-3xl mx-auto">
+              {t.modernStack.description}
+            </p>
+          </motion.div>
+
+          {/* Core Layer */}
+          <div className="relative max-w-4xl mx-auto mb-20">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.8 }}
+              className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-8 rounded-2xl border border-gray-700 text-center"
+            >
+              <div className="flex items-center justify-center gap-4 mb-6">
+                <Box className="w-12 h-12 text-blue-400" />
+                <h3 className="text-2xl font-bold">React Core</h3>
+              </div>
+              <div className="grid md:grid-cols-3 gap-6">
+                {[
+                  {
+                    icon: <FileCode className="w-6 h-6" />,
+                    text: "JSX Components",
+                    link: "https://react.dev/learn",
+                  },
+                  {
+                    icon: <Workflow className="w-6 h-6" />,
+                    text: "React Hooks",
+                    link: "https://react.dev/learn/hooks-overview",
+                  },
+                  {
+                    icon: <Cpu className="w-6 h-6" />,
+                    text: "Virtual DOM",
+                    link: "https://react.dev/learn/render-and-commit",
+                  },
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 justify-center hover:text-blue-400 transition-colors"
+                  >
+                    {item.icon}
+                    <span>{item.text}</span>
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Tooling Layer */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+            {[
+              {
+                title: "Build Tools",
+                items: [
+                  { name: "Next.js", link: "https://nextjs.org/learn" },
+                  { name: "Vite", link: "https://vitejs.dev/guide/" },
+                  { name: "Webpack", link: "https://webpack.js.org/concepts/" },
+                ],
+                icon: <Package className="w-8 h-8 text-blue-400" />,
+              },
+              {
+                title: "State Management",
+                items: [
+                  {
+                    name: "Redux",
+                    link: "https://redux.js.org/introduction/getting-started",
+                  },
+                  {
+                    name: "Zustand",
+                    link: "https://docs.pmnd.rs/zustand/getting-started/introduction",
+                  },
+                  {
+                    name: "Recoil",
+                    link: "https://recoiljs.org/docs/introduction/getting-started",
+                  },
+                ],
+                icon: <Database className="w-8 h-8 text-purple-400" />,
+              },
+              {
+                title: "Styling",
+                items: [
+                  {
+                    name: "Tailwind CSS",
+                    link: "https://tailwindcss.com/docs/installation",
+                  },
+                  {
+                    name: "Styled Components",
+                    link: "https://styled-components.com/docs/basics#getting-started",
+                  },
+                  {
+                    name: "CSS Modules",
+                    link: "https://github.com/css-modules/css-modules",
+                  },
+                ],
+                icon: <Layout className="w-8 h-8 text-green-400" />,
+              },
+              {
+                title: "Routing",
+                items: [
+                  {
+                    name: "React Router",
+                    link: "https://reactrouter.com/en/main/start/overview",
+                  },
+                  {
+                    name: "Next.js Router",
+                    link: "https://nextjs.org/docs/routing/introduction",
+                  },
+                  {
+                    name: "TanStack Router",
+                    link: "https://tanstack.com/router/latest/docs/framework/react/overview",
+                  },
+                ],
+                icon: <Network className="w-8 h-8 text-yellow-400" />,
+              },
+            ].map((tool, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-gray-800/50 p-6 rounded-lg border border-gray-700"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  {tool.icon}
+                  <h3 className="text-xl font-semibold">{tool.title}</h3>
+                </div>
+                <ul className="space-y-2">
+                  {tool.items.map((item, i) => (
+                    <li key={i}>
+                      <a
+                        href={item.link}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2 text-gray-300 hover:text-blue-400 transition-colors"
+                      >
+                        <ArrowRight className="w-4 h-4 text-blue-400" />
+                        {item.name}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            ))}
+          </div>
+
+          {/* Data & Backend Layer */}
+          <div className="grid md:grid-cols-2 gap-8 mb-20">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="bg-gray-800/50 p-6 rounded-lg border border-gray-700"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Webhook className="w-8 h-8 text-blue-400" />
+                <h3 className="text-xl font-semibold">Data & API Layer</h3>
+              </div>
+              <div className="space-y-4">
+                {[
+                  {
+                    name: "GraphQL (Apollo/Relay)",
+                    link: "https://graphql.org/learn/",
+                  },
+                  {
+                    name: "REST APIs (Axios/Fetch)",
+                    link: "https://axios-http.com/docs/intro",
+                  },
+                  {
+                    name: "tRPC / TanStack Query",
+                    link: "https://tanstack.com/query/latest/docs/framework/react/overview",
+                  },
+                  {
+                    name: "WebSocket Connections",
+                    link: "https://developer.mozilla.org/en-US/docs/Web/API/WebSockets_API",
+                  },
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-gray-300 hover:text-blue-400 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-blue-400" />
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="bg-gray-800/50 p-6 rounded-lg border border-gray-700"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Terminal className="w-8 h-8 text-purple-400" />
+                <h3 className="text-xl font-semibold">Backend Integration</h3>
+              </div>
+              <div className="space-y-4">
+                {[
+                  {
+                    name: "Node.js / Express",
+                    link: "https://expressjs.com/en/starter/installing.html",
+                  },
+                  {
+                    name: "PostgreSQL / MongoDB",
+                    link: "https://www.mongodb.com/docs/manual/tutorial/getting-started/",
+                  },
+                  {
+                    name: "Prisma / TypeORM",
+                    link: "https://www.prisma.io/docs/getting-started",
+                  },
+                  {
+                    name: "Firebase / Supabase",
+                    link: "https://supabase.com/docs/guides/getting-started",
+                  },
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-gray-300 hover:text-purple-400 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-purple-400" />
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Mobile & DevOps Layer */}
+          <div className="grid md:grid-cols-2 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="bg-gray-800/50 p-6 rounded-lg border border-gray-700"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Smartphone className="w-8 h-8 text-green-400" />
+                <h3 className="text-xl font-semibold">Mobile Development</h3>
+              </div>
+              <div className="space-y-4">
+                {[
+                  {
+                    name: "React Native",
+                    link: "https://reactnative.dev/docs/environment-setup",
+                  },
+                  {
+                    name: "Expo",
+                    link: "https://docs.expo.dev/get-started/installation/",
+                  },
+                  {
+                    name: "Shared Components",
+                    link: "https://reactnative.dev/docs/components-and-apis",
+                  },
+                  {
+                    name: "Cross-Platform Logic",
+                    link: "https://reactnative.dev/docs/platform-specific-code",
+                  },
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-gray-300 hover:text-green-400 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-green-400" />
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="bg-gray-800/50 p-6 rounded-lg border border-gray-700"
+            >
+              <div className="flex items-center gap-3 mb-6">
+                <Settings className="w-8 h-8 text-yellow-400" />
+                <h3 className="text-xl font-semibold">DevOps & Hosting</h3>
+              </div>
+              <div className="space-y-4">
+                {[
+                  {
+                    name: "Vercel / Netlify",
+                    link: "https://vercel.com/docs/get-started",
+                  },
+                  {
+                    name: "Docker / Kubernetes",
+                    link: "https://docs.docker.com/get-started/",
+                  },
+                  {
+                    name: "CI/CD Pipelines",
+                    link: "https://docs.github.com/en/actions/guides/about-continuous-integration",
+                  },
+                  {
+                    name: "Serverless Functions",
+                    link: "https://vercel.com/docs/functions/serverless-functions",
+                  },
+                ].map((item, index) => (
+                  <a
+                    key={index}
+                    href={item.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-2 text-gray-300 hover:text-yellow-400 transition-colors"
+                  >
+                    <ArrowRight className="w-4 h-4 text-yellow-400" />
+                    {item.name}
+                  </a>
+                ))}
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Soundbites */}
+          <div className="grid md:grid-cols-3 gap-6 mt-16">
+            {[
+              "React is the UI Brain of the Modern Web",
+              "From Server to Screen — React Fits Anywhere",
+              "Build Once, Scale Everywhere",
+            ].map((soundbite, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-gradient-to-r from-blue-500/20 to-purple-500/20 p-6 rounded-lg border border-gray-700 text-center"
+              >
+                <p className="text-lg font-medium">{soundbite}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Call to Action */}
       <section className="py-20 relative">
         <div className="container mx-auto px-4 text-center">
@@ -901,18 +1424,14 @@ export function Infographic() {
             className="max-w-2xl mx-auto"
           >
             <h2 className="text-4xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-              React isn't just a library. It's a movement that redefined UI
-              development.
+              {t.cta.title}
             </h2>
-            <p className="text-gray-300 text-lg mb-8">
-              Join millions of developers building the future of web
-              applications
-            </p>
+            <p className="text-gray-300 text-lg mb-8">{t.cta.subtitle}</p>
             <button
               className="px-8 py-3 bg-gradient-to-r from-blue-500 to-purple-500 rounded-lg font-semibold hover:opacity-90 transition-opacity"
               onClick={() => window.open("https://vite.dev/", "_blank")}
             >
-              Get Started with React
+              {t.cta.button}
             </button>
           </motion.div>
         </div>
